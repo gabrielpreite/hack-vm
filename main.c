@@ -38,17 +38,19 @@ int main(int argc, char **argv){
             char c[] = "";
             for(; i<100 && !isspace(a[i]); i++){//legge prima parte
                 a[i] = riga[i];
+                printf("a:%c\n", riga[i]);
             }
 
             int offset = i;
             for(; i<100 && !isspace(riga[i]); i++){//legge seconda parte
                 b[(i-offset)] = riga[i];
+                printf("b:%c\n", riga[i]);
             }
+            
             offset = i;
-
             for(; i<100 && !isspace(riga[i]); i++){//legge terza parte
                 c[(i-offset)] = riga[i];
-                printf("%c\n", c[i]);
+                printf("c:%c\n", riga[i]);
             }
             //printf("%s,%s,%d", a, b, c);
             ptr_stack x = {a, b, atoi(c), it};
