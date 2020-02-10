@@ -73,17 +73,21 @@ int main(int argc, char **argv){
             printf("a:%s, b:%s, c:%s\n", a, b, c);
 
             if(!strcmp(a, "push")){
-                struct command x;
-                x.a = (char*)malloc(50);
-                x.b = (char*)malloc(50);
-                x.c = (char*)malloc(50);
-                x.prev = it;
-                strcpy(x.a, a);
-                strcpy(x.b, b);
-                strcpy(x.c, c);
+                ptr_stack x = (ptr_stack)malloc(sizeof(com));
+                x->a = (char*)malloc(50);
+                x->b = (char*)malloc(50);
+                x->c = (char*)malloc(50);
+                //if(it != NULL)
+                //    printf("test:%s",it->c);
+                x->prev = it;
+                strcpy(x->a, a);
+                strcpy(x->b, b);
+                strcpy(x->c, c);
                 //printf("a:%s, b:%s, c:%s", a, b, c);
                 //printf("%s,%s,%d", it->a, it->b, it->c);
-                it = &x;
+                it = x;
+                //if(it->prev != NULL)
+                //    printf("test3:%s",it->prev->c);
             }
             
         }
