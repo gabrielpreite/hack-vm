@@ -12,7 +12,16 @@ typedef struct command{
 typedef struct command* ptr_stack;
 ptr_stack it = NULL;
 
+char* removetr(char* c){
+    char *c2 = (char*)malloc(50);
+    for(int i=0; i<50 && !isspace(c[i]); i++){
+        c2[i] = c[i];
+    }
+    return c2;
+}
+
 int main(int argc, char **argv){
+    int local[10000] = (int)malloc(sizeof(int)*10000);
     //printf("%s", argv[1]);
     FILE *fin;//apre file input
     fin = fopen(argv[1], "r");
@@ -31,27 +40,6 @@ int main(int argc, char **argv){
     while(fgets(riga, 100, fin)){
         //printf("a:%d\n", riga[0]);
         if(riga[0] != '\r' && riga[0] != '/'){
-            /*//printf("b:%d\n", riga[0]);
-            int i=0;
-            char a[] = "";
-            char b[] = "";
-            char c[] = "";
-            for(; i<100 && !isspace(riga[i]); i++){//legge prima parte
-                a[i] = riga[i];
-                //printf("a:%c\n", riga[i]);
-            }
-
-            int offset = i;
-            for(; i<100 && !isspace(riga[i]); i++){//legge seconda parte
-                b[(i-offset)] = riga[i];
-                //printf("b:%c\n", riga[i]);
-            }
-            
-            offset = i;
-            for(; i<100 && !isspace(riga[i]); i++){//legge terza parte
-                c[(i-offset)] = riga[i];
-                //printf("c:%c\n", riga[i]);
-            }*/
             char *a = (char*)malloc(50);
             char *b = (char*)malloc(50);
             char *c = (char*)malloc(50);
@@ -69,6 +57,10 @@ int main(int argc, char **argv){
                 if(token != NULL)
                     strcpy(c, token);//load c
             }
+
+            a = removetr(a);//removes trailing lf
+            b = removetr(b);
+            c = removetr(c);
 
             printf("a:%s, b:%s, c:%s\n", a, b, c);
 
@@ -89,7 +81,28 @@ int main(int argc, char **argv){
                 //if(it->prev != NULL)
                 //    printf("test3:%s",it->prev->c);
             }
-            
+            if(!strcmp(a, "add")){
+                printf("asd");
+                com c1 = *it;
+                it = it->prev;
+                com c2 = *it;
+                it = it->prev;//reads the first two items on the stack
+
+                //processes the first argument
+                if(!strcmp(c1.b, "constant")){
+                    fprintf(fout, "@%d\n", atoi(c1.c));
+                    fprintf(fout, "D=A\n");
+                }else if(!strcmp(c1.b, "constant")){
+                    fprintf(fout, "@%d\n", atoi(c1.c));
+                    fprintf(fout, "D=A\n");
+                }
+
+                //processes the second argument
+                if(!strcmp(c2.b, "constant")){
+                    fprintf(fout, "@%d\n", atoi(c2.c));
+                    fprintf(fout, "D=D+A\n");
+                }
+            }
         }
     }
     while(it != NULL){
